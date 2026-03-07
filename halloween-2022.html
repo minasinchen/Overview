@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halloween 2022 · Carn"evil"</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black:    #08060c;
+      --card-bg:  #100c18;
+      --pink:     #c060a0;
+      --pink2:    #e090c8;
+      --yellow:   #d4b030;
+      --teal:     #30a8a0;
+      --orange:   #d87040;
+      --cream:    #ede0d0;
+      --text:     #b8b0c0;
+      --dim:      #5a5068;
+      --border:   rgba(255,255,255,0.06);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--black);
+      background-image:
+        radial-gradient(ellipse 100% 55% at 50% 0%, #200a28 0%, #08060c 55%),
+        radial-gradient(ellipse 40% 30% at 90% 90%, #200808 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 10% 90%, #080820 0%, transparent 70%);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0;
+      background: rgba(8,6,12,0.9);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-back {
+      font-size: 0.78rem; letter-spacing: 0.15em;
+      color: var(--dim); text-decoration: none;
+      display: flex; align-items: center; gap: 0.5rem;
+      transition: color 0.25s;
+    }
+    .nav-back:hover { color: var(--pink2); }
+    .nav-title {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 1rem; color: var(--dim); letter-spacing: 0.08em;
+    }
+    .nav-title em { font-style: italic; color: var(--pink); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem 5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-year {
+      font-family: 'Cormorant Garant', serif;
+      font-style: italic;
+      font-size: clamp(5rem, 18vw, 12rem);
+      font-weight: 300;
+      color: var(--pink);
+      opacity: 0.15;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none; user-select: none;
+      line-height: 1; white-space: nowrap;
+    }
+
+    /* Carnival ornament SVG */
+    .hero-carnival {
+      width: min(280px, 75vw);
+      height: auto;
+      margin-bottom: 2.5rem;
+      filter: drop-shadow(0 0 50px rgba(192,96,160,0.3));
+      animation: carniFloat 7s ease-in-out infinite;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem; letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--pink); opacity: 0.8;
+      margin-bottom: 1rem;
+      animation: fadeUp 1s ease 0.3s both;
+      position: relative;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garant', serif;
+      font-size: clamp(3rem, 11vw, 7rem);
+      font-weight: 300;
+      color: var(--cream);
+      letter-spacing: 0.02em;
+      line-height: 0.95;
+      animation: fadeUp 1s ease 0.5s both;
+      position: relative;
+    }
+
+    .hero-title .carn { color: var(--pink2); font-style: italic; }
+    .hero-title .evil { color: var(--yellow); font-style: italic; }
+
+    .hero-sub {
+      font-family: 'Cormorant Garant', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--dim);
+      margin-top: 1rem;
+      animation: fadeUp 1s ease 0.7s both;
+      position: relative;
+    }
+
+    .hero-ornament {
+      display: flex; align-items: center; gap: 1.2rem; justify-content: center;
+      margin-top: 2rem;
+      animation: fadeUp 1s ease 0.9s both;
+      position: relative;
+    }
+    .hero-ornament-line {
+      width: 60px; height: 1px;
+      background: linear-gradient(to right, transparent, rgba(192,96,160,0.45));
+    }
+    .hero-ornament-line:last-child {
+      background: linear-gradient(to left, transparent, rgba(192,96,160,0.45));
+    }
+
+    .scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      color: var(--dim);
+      animation: bounce 2.5s ease-in-out infinite;
+      opacity: 0.4;
+    }
+
+    /* ── CONTENT ── */
+    .content {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 4rem 2rem 8rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--dim); text-align: center; margin-bottom: 3rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .section-label::before, .section-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    /* Mood cards */
+    .mood-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 5rem;
+    }
+
+    .mood-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.35s, transform 0.4s cubic-bezier(0.23,1,0.32,1);
+    }
+    .mood-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--mood-color);
+    }
+    .mood-card:hover {
+      border-color: rgba(255,255,255,0.1);
+      transform: translateY(-5px);
+    }
+
+    .mood-icon { font-size: 2rem; display: block; margin-bottom: 0.8rem; }
+
+    .mood-title {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 1.3rem; color: var(--cream); margin-bottom: 0.4rem;
+    }
+
+    .mood-text { font-size: 0.85rem; color: var(--dim); line-height: 1.7; }
+
+    /* ── GALLERY ── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .gallery-slot {
+      aspect-ratio: 4/3;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.6rem;
+      color: var(--dim);
+      font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+      position: relative; overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .gallery-slot:hover { border-color: rgba(192,96,160,0.15); }
+    .gallery-slot svg { opacity: 0.2; }
+    .gallery-slot img {
+      width: 100%; height: 100%; object-fit: cover;
+      position: absolute; top: 0; left: 0; border-radius: 12px;
+    }
+
+    /* Confetti particles */
+    .confetti {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      border-radius: 2px;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes carniFloat {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      35% { transform: translateY(-12px) rotate(2deg); }
+      65% { transform: translateY(-6px) rotate(-1.5deg); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); opacity: 0.4; }
+      50%     { transform: translateX(-50%) translateY(7px); opacity: 0.7; }
+    }
+
+    footer {
+      text-align: center; padding: 2.5rem; color: var(--dim);
+      font-size: 0.75rem; letter-spacing: 0.15em;
+      border-top: 1px solid var(--border);
+      position: relative; z-index: 1;
+    }
+
+    @media (max-width: 580px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-title { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="halloween.html" class="nav-back">← Halloween</a>
+    <span class="nav-title">mina<em>sinchen</em></span>
+    <span style="width:80px"></span>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-year" aria-hidden="true">2022</div>
+
+    <!-- Carnival Jester Hat SVG -->
+    <svg class="hero-carnival" viewBox="0 0 280 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+
+      <!-- Stars in background -->
+      <circle cx="30"  cy="30"  r="2" fill="#d4b030" opacity="0.5"/>
+      <circle cx="250" cy="25"  r="2.5" fill="#c060a0" opacity="0.5"/>
+      <circle cx="265" cy="70"  r="1.5" fill="#30a8a0" opacity="0.5"/>
+      <circle cx="15"  cy="80"  r="2" fill="#d87040" opacity="0.45"/>
+      <circle cx="140" cy="15"  r="2" fill="#d4b030" opacity="0.4"/>
+
+      <!-- Jester hat — left bell -->
+      <path d="M60,120 C40,90 20,60 10,20 C35,35 65,55 80,80 Z" fill="#c060a0" stroke="#e090c8" stroke-width="1"/>
+      <path d="M60,120 C40,90 20,60 10,20 C35,35 65,55 80,80 Z" fill="none" stroke="#e090c8" stroke-width="0.5" opacity="0.4"/>
+      <!-- Zigzag on left bell -->
+      <path d="M35,85 L45,70 L55,85 L65,70" fill="none" stroke="#d4b030" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+      <!-- Bell tip circle -->
+      <circle cx="10" cy="20" r="8" fill="#d4b030" opacity="0.9"/>
+      <circle cx="10" cy="20" r="5" fill="#f0d058" opacity="0.8"/>
+
+      <!-- Main hat body -->
+      <path d="M70,155 C70,130 80,115 110,100 C130,93 150,93 170,100 C200,115 210,130 210,155 Z"
+        fill="#30a8a0" stroke="#50c8c0" stroke-width="1"/>
+      <!-- Hat brim -->
+      <path d="M50,155 Q140,145 230,155 Q220,170 140,175 Q60,170 50,155 Z"
+        fill="#c060a0" stroke="#e090c8" stroke-width="1"/>
+      <!-- Brim pattern -->
+      <path d="M65,160 L80,155 L95,162 L110,155 L125,162 L140,155 L155,162 L170,155 L185,162 L200,155 L215,160"
+        fill="none" stroke="#d4b030" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+
+      <!-- Center spike -->
+      <path d="M110,100 C120,60 130,30 140,10 C150,30 160,60 170,100"
+        fill="#d87040" stroke="#f09060" stroke-width="1"/>
+      <!-- Center zigzag -->
+      <path d="M125,75 L135,58 L145,75 L155,58" fill="none" stroke="#d4b030" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+      <!-- Center tip bell -->
+      <circle cx="140" cy="10" r="9" fill="#c060a0" opacity="0.9"/>
+      <circle cx="140" cy="10" r="6" fill="#e090c8" opacity="0.8"/>
+
+      <!-- Right bell -->
+      <path d="M220,120 C240,90 260,60 270,20 C245,35 215,55 200,80 Z" fill="#d4b030" stroke="#f0d058" stroke-width="1"/>
+      <path d="M245,85 L235,70 L225,85 L215,70" fill="none" stroke="#c060a0" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+      <circle cx="270" cy="20" r="8" fill="#30a8a0" opacity="0.9"/>
+      <circle cx="270" cy="20" r="5" fill="#58d0c8" opacity="0.8"/>
+
+      <!-- Stars / sparkles -->
+      <path d="M55,40 L57,34 L59,40 L65,42 L59,44 L57,50 L55,44 L49,42 Z" fill="#d4b030" opacity="0.6"/>
+      <path d="M215,50 L217,45 L219,50 L224,52 L219,54 L217,58 L215,54 L210,52 Z" fill="#c060a0" opacity="0.55"/>
+      <path d="M90,35 L91,32 L92,35 L95,36 L92,37 L91,40 L90,37 L87,36 Z" fill="#30a8a0" opacity="0.5"/>
+    </svg>
+
+    <p class="hero-eyebrow">Halloween 2022 · Unicornia Mansion</p>
+    <h1 class="hero-title">
+      <span class="carn">Carn</span><span class="evil">"evil"</span>
+    </h1>
+    <p class="hero-sub">wo das Karneval auf die dunkle Seite trifft</p>
+
+    <div class="hero-ornament">
+      <div class="hero-ornament-line"></div>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M8,1 L9.5,6 L15,6 L10.5,9.5 L12,15 L8,11.5 L4,15 L5.5,9.5 L1,6 L6.5,6 Z"
+          fill="#d4b030" opacity="0.7"/>
+      </svg>
+      <div class="hero-ornament-line"></div>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">↓</div>
+  </header>
+
+  <main>
+    <div class="content">
+
+      <p class="section-label">Das Motto</p>
+
+      <div class="mood-grid">
+        <div class="mood-card" style="--mood-color: linear-gradient(to right, #c060a0, #e090c8);">
+          <span class="mood-icon">🎭</span>
+          <h3 class="mood-title">Doppeltes Spiel</h3>
+          <p class="mood-text">Karneval trifft Halloween — Masken, Kostüme und die Grenze zwischen Spaß und Schrecken.</p>
+        </div>
+        <div class="mood-card" style="--mood-color: linear-gradient(to right, #d4b030, #f0d058);">
+          <span class="mood-icon">🎪</span>
+          <h3 class="mood-title">Das Zirkuszelt</h3>
+          <p class="mood-text">Das Unicornia Mansion als düsteres Zirkuszelt — Konfetti, Licht und Schatten.</p>
+        </div>
+        <div class="mood-card" style="--mood-color: linear-gradient(to right, #30a8a0, #58d0c8);">
+          <span class="mood-icon">🃏</span>
+          <h3 class="mood-title">Der Joker</h3>
+          <p class="mood-text">Jeder ein Narr, jeder ein Monster — Carn"evil" lässt keine Entscheidung zu.</p>
+        </div>
+      </div>
+
+      <p class="section-label">Erinnerungen</p>
+
+      <div class="gallery-grid">
+        <div class="gallery-slot">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="6" width="24" height="20" rx="3" stroke="#5a5068" stroke-width="1.5"/>
+            <circle cx="16" cy="15" r="5" stroke="#5a5068" stroke-width="1.5"/>
+            <circle cx="23" cy="10" r="1.5" fill="#5a5068"/>
+          </svg>
+          <span>Foto</span>
+        </div>
+        <div class="gallery-slot">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="6" width="24" height="20" rx="3" stroke="#5a5068" stroke-width="1.5"/>
+            <circle cx="16" cy="15" r="5" stroke="#5a5068" stroke-width="1.5"/>
+            <circle cx="23" cy="10" r="1.5" fill="#5a5068"/>
+          </svg>
+          <span>Foto</span>
+        </div>
+        <div class="gallery-slot">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="6" width="24" height="20" rx="3" stroke="#5a5068" stroke-width="1.5"/>
+            <circle cx="16" cy="15" r="5" stroke="#5a5068" stroke-width="1.5"/>
+            <circle cx="23" cy="10" r="1.5" fill="#5a5068"/>
+          </svg>
+          <span>Foto</span>
+        </div>
+        <div class="gallery-slot">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="6" width="24" height="20" rx="3" stroke="#5a5068" stroke-width="1.5"/>
+            <circle cx="16" cy="15" r="5" stroke="#5a5068" stroke-width="1.5"/>
+            <circle cx="23" cy="10" r="1.5" fill="#5a5068"/>
+          </svg>
+          <span>Foto</span>
+        </div>
+        <div class="gallery-slot">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="6" width="24" height="20" rx="3" stroke="#5a5068" stroke-width="1.5"/>
+            <circle cx="16" cy="15" r="5" stroke="#5a5068" stroke-width="1.5"/>
+            <circle cx="23" cy="10" r="1.5" fill="#5a5068"/>
+          </svg>
+          <span>Foto</span>
+        </div>
+        <div class="gallery-slot">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="6" width="24" height="20" rx="3" stroke="#5a5068" stroke-width="1.5"/>
+            <circle cx="16" cy="15" r="5" stroke="#5a5068" stroke-width="1.5"/>
+            <circle cx="23" cy="10" r="1.5" fill="#5a5068"/>
+          </svg>
+          <span>Foto</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>handgemacht mit Sorgfalt &nbsp;·&nbsp; minasinchen</p>
+  </footer>
+
+  <script>
+    // Falling confetti
+    const colors = ['#c060a0','#d4b030','#30a8a0','#d87040','#e090c8','#f0d058'];
+    const styleEl = document.createElement('style');
+    for (let i = 0; i < 6; i++) {
+      const dx = (Math.random() - 0.5) * 200;
+      const rot = Math.random() * 720;
+      styleEl.textContent += `
+        @keyframes conf${i} {
+          0%   { transform:translateY(0) translateX(0) rotate(0deg); opacity:0; }
+          5%   { opacity:0.5; }
+          95%  { opacity:0.3; }
+          100% { transform:translateY(108vh) translateX(${dx}px) rotate(${rot}deg); opacity:0; }
+        }`;
+    }
+    document.head.appendChild(styleEl);
+
+    for (let i = 0; i < 22; i++) {
+      const el = document.createElement('div');
+      const color = colors[i % colors.length];
+      const w = Math.random() * 8 + 4;
+      const h = Math.random() * 14 + 6;
+      el.style.cssText = `
+        position:fixed; top:-20px; left:${Math.random()*100}vw;
+        width:${w}px; height:${h}px; background:${color};
+        border-radius:${Math.random() > 0.5 ? '50%' : '2px'};
+        transform:rotate(${Math.random()*360}deg);
+        animation:conf${i % 6} ${Math.random()*12+8}s ease-in ${Math.random()*18}s infinite;
+        pointer-events:none; z-index:0; opacity:0;`;
+      document.body.appendChild(el);
+    }
+  </script>
+
+</body>
+</html>

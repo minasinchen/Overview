@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unicornia Drohnen · minasinchen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black:    #08070f;
+      --card-bg:  #0e0d18;
+      --accent:   #8898cc;
+      --accent2:  #b8c8e0;
+      --lavender: #b8aad8;
+      --cream:    #ede0d0;
+      --text:     #bbb4b8;
+      --dim:      #5a5460;
+      --border:   rgba(255,255,255,0.06);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--black);
+      background-image: radial-gradient(ellipse 120% 50% at 50% 0%, #101828 0%, #08070f 55%);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(8,7,15,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+    .nav-back {
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      color: var(--dim);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.25s;
+    }
+
+    .nav-back:hover { color: var(--accent2); }
+
+    .nav-title {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--dim);
+      letter-spacing: 0.08em;
+    }
+
+    .nav-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 5rem 2rem 3rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-ornament {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 2rem;
+      animation: float 6s ease-in-out infinite;
+      filter: drop-shadow(0 0 30px rgba(136,152,204,0.3));
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garant', serif;
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      font-weight: 300;
+      color: var(--cream);
+      letter-spacing: 0.04em;
+      line-height: 1.05;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-family: 'Cormorant Garant', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--dim);
+      margin-top: 0.7rem;
+      letter-spacing: 0.1em;
+    }
+
+    .hero-line {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--accent), transparent);
+      margin: 2rem auto 0;
+    }
+
+    /* ── VIDEOS SECTION ── */
+    .videos-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 2rem 8rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--dim);
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .video-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    .video-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: border-color 0.35s, box-shadow 0.35s;
+    }
+
+    .video-card:hover {
+      border-color: rgba(136,152,204,0.2);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(136,152,204,0.07);
+    }
+
+    /* Responsive 16:9 embed */
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      background: #050408;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
+    }
+
+    .video-info {
+      padding: 1.5rem 1.75rem;
+    }
+
+    .video-tag {
+      font-size: 0.67rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .video-title {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+
+    .video-desc {
+      font-size: 0.85rem;
+      color: var(--dim);
+      line-height: 1.7;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(-10px); }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2.5rem;
+      color: var(--dim);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 580px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-title { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="index.html" class="nav-back">← Übersicht</a>
+    <span class="nav-title">mina<em>sinchen</em></span>
+    <span style="width:80px"></span><!-- spacer for centering -->
+  </nav>
+
+  <!-- ── HERO ── -->
+  <header class="hero">
+    <svg class="hero-ornament" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+      <g transform="translate(40,40)">
+        <!-- 4 main propeller arms -->
+        <g transform="rotate(0)">  <ellipse cx="0" cy="-18" rx="7" ry="20" fill="#8898cc" opacity="0.8"/></g>
+        <g transform="rotate(90)"> <ellipse cx="0" cy="-18" rx="7" ry="20" fill="#a0b0d8" opacity="0.75"/></g>
+        <g transform="rotate(180)"><ellipse cx="0" cy="-18" rx="7" ry="20" fill="#8898cc" opacity="0.8"/></g>
+        <g transform="rotate(270)"><ellipse cx="0" cy="-18" rx="7" ry="20" fill="#a0b0d8" opacity="0.75"/></g>
+        <!-- 4 diagonal arms -->
+        <g transform="rotate(45)"> <ellipse cx="0" cy="-13" rx="5"  ry="15" fill="#c0ccee" opacity="0.6"/></g>
+        <g transform="rotate(135)"><ellipse cx="0" cy="-13" rx="5"  ry="15" fill="#c0ccee" opacity="0.6"/></g>
+        <g transform="rotate(225)"><ellipse cx="0" cy="-13" rx="5"  ry="15" fill="#c0ccee" opacity="0.6"/></g>
+        <g transform="rotate(315)"><ellipse cx="0" cy="-13" rx="5"  ry="15" fill="#c0ccee" opacity="0.6"/></g>
+        <circle r="8"  fill="#c8d4ee"/>
+        <circle r="4"  fill="#e8eeff"/>
+        <!-- Small accent dots -->
+        <circle cx="0"  cy="-22" r="2" fill="#8898cc" opacity="0.5"/>
+        <circle cx="22" cy="0"   r="2" fill="#8898cc" opacity="0.5" transform="rotate(90)"/>
+      </g>
+    </svg>
+
+    <h1 class="hero-title"><em>Unicornia</em> Drohnen</h1>
+    <p class="hero-sub">die Welt von oben betrachtet</p>
+    <div class="hero-line"></div>
+  </header>
+
+  <!-- ── VIDEOS ── -->
+  <main>
+    <section class="videos-section">
+      <p class="section-label">Videos</p>
+
+      <div class="video-grid">
+
+        <!-- Video 1 -->
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/aDAJwtRY_tk"
+              title="Unicornia Drohnen Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="video-info">
+            <p class="video-tag">Drohnen · Luftaufnahme</p>
+            <h2 class="video-title">Unicornia Drohnen</h2>
+            <p class="video-desc">Luftaufnahmen aus der Unicornia-Welt — die Welt von oben, in Cinematographie festgehalten.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>handgemacht mit Sorgfalt &nbsp;·&nbsp; minasinchen</p>
+  </footer>
+
+</body>
+</html>

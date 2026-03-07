@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halloween · Unicornia Mansion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black:   #0a0608;
+      --card-bg: #130a10;
+      --orange:  #e8904c;
+      --purple:  #9870c8;
+      --purple2: #c0a0e0;
+      --gold:    #d4a840;
+      --cream:   #ede0d0;
+      --text:    #bbb0b8;
+      --dim:     #5a4858;
+      --border:  rgba(255,255,255,0.05);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--black);
+      background-image:
+        radial-gradient(ellipse 100% 60% at 50% 0%, #1e0818 0%, #0a0608 55%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, #180c08 0%, transparent 70%);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(10,6,8,0.88);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+    .nav-back {
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      color: var(--dim);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.25s;
+    }
+
+    .nav-back:hover { color: var(--orange); }
+
+    .nav-title {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--dim);
+      letter-spacing: 0.08em;
+    }
+
+    .nav-title em {
+      font-style: italic;
+      color: var(--orange);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem 5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    /* Mansion silhouette SVG */
+    .hero-mansion {
+      width: min(400px, 90vw);
+      height: auto;
+      margin-bottom: 3rem;
+      filter: drop-shadow(0 0 60px rgba(232,144,76,0.2));
+      animation: mansionFloat 8s ease-in-out infinite;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--orange);
+      opacity: 0.8;
+      margin-bottom: 1rem;
+      animation: fadeUp 1s ease 0.3s both;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garant', serif;
+      font-size: clamp(3rem, 10vw, 6.5rem);
+      font-weight: 300;
+      color: var(--cream);
+      letter-spacing: 0.04em;
+      line-height: 0.95;
+      animation: fadeUp 1s ease 0.5s both;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--orange);
+      display: block;
+    }
+
+    .hero-title span {
+      color: var(--purple2);
+    }
+
+    .hero-sub {
+      font-family: 'Cormorant Garant', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--dim);
+      margin-top: 1rem;
+      letter-spacing: 0.1em;
+      animation: fadeUp 1s ease 0.7s both;
+    }
+
+    .hero-ornament {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-top: 2.5rem;
+      animation: fadeUp 1s ease 0.9s both;
+    }
+
+    .hero-ornament-line {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(232,144,76,0.4));
+    }
+    .hero-ornament-line:last-child {
+      background: linear-gradient(to left, transparent, rgba(232,144,76,0.4));
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--dim);
+      animation: bounce 2.5s ease-in-out infinite;
+      opacity: 0.45;
+    }
+
+    /* ── TRADITION SECTION ── */
+    .section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--dim);
+      text-align: center;
+      margin-bottom: 3.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::before,
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .tradition-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .tradition-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: border-color 0.35s, transform 0.4s cubic-bezier(0.23,1,0.32,1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tradition-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--card-accent, linear-gradient(to right, var(--orange), var(--purple)));
+      border-radius: 16px 16px 0 0;
+    }
+
+    .tradition-card:hover {
+      border-color: rgba(232,144,76,0.18);
+      transform: translateY(-6px);
+    }
+
+    .tradition-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .tradition-title {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+
+    .tradition-text {
+      font-size: 0.85rem;
+      line-height: 1.75;
+      color: var(--dim);
+    }
+
+    /* ── GALLERY SECTION ── */
+    .gallery-section {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 0 2rem 8rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .gallery-slot {
+      aspect-ratio: 4/3;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      color: var(--dim);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: border-color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-slot:hover {
+      border-color: rgba(232,144,76,0.15);
+    }
+
+    .gallery-slot svg {
+      opacity: 0.25;
+    }
+
+    /* Image slots — replace src="" with actual image path to use */
+    .gallery-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0; left: 0;
+      border-radius: 12px;
+    }
+
+    /* ── YEAR CARDS ── */
+    .years-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 5rem;
+    }
+
+    .year-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem 2rem 1.75rem;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), border-color 0.35s, box-shadow 0.4s;
+    }
+
+    .year-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: var(--year-accent);
+      border-radius: 20px 20px 0 0;
+    }
+
+    .year-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--year-border);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.55), 0 0 40px var(--year-glow);
+    }
+
+    .year-number {
+      font-family: 'Cormorant Garant', serif;
+      font-style: italic;
+      font-size: 4rem;
+      font-weight: 300;
+      color: var(--year-color);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      opacity: 0.9;
+    }
+
+    .year-theme {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--cream);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .year-cta {
+      font-size: 0.76rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--year-color);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: gap 0.3s;
+    }
+
+    .year-card:hover .year-cta { gap: 0.9rem; }
+
+    /* ── FLYING BATS ── */
+    .bat {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes mansionFloat {
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(-12px); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); opacity: 0.4; }
+      50%     { transform: translateX(-50%) translateY(7px); opacity: 0.7; }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2.5rem;
+      color: var(--dim);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 580px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-title { display: none; }
+      .tradition-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="index.html" class="nav-back">← Übersicht</a>
+    <span class="nav-title">mina<em>sinchen</em></span>
+    <span style="width:80px"></span>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <header class="hero">
+
+    <!-- Mansion + Moon illustration -->
+    <svg class="hero-mansion" viewBox="0 0 400 280" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+
+      <!-- Background moon -->
+      <circle cx="200" cy="80" r="70" fill="#e8904c" opacity="0.12"/>
+      <circle cx="200" cy="80" r="55" fill="#e8904c" opacity="0.1"/>
+      <circle cx="200" cy="80" r="40" fill="#e8904c" opacity="0.15"/>
+
+      <!-- Moon crescent effect -->
+      <circle cx="225" cy="72" r="48" fill="#0a0608" opacity="0.75"/>
+
+      <!-- Stars -->
+      <circle cx="80"  cy="30"  r="1.5" fill="#e0d0c0" opacity="0.7"/>
+      <circle cx="320" cy="20"  r="1.2" fill="#e0d0c0" opacity="0.6"/>
+      <circle cx="50"  cy="70"  r="1"   fill="#e0d0c0" opacity="0.5"/>
+      <circle cx="350" cy="55"  r="1.5" fill="#e0d0c0" opacity="0.65"/>
+      <circle cx="140" cy="18"  r="1"   fill="#e0d0c0" opacity="0.55"/>
+      <circle cx="270" cy="35"  r="1.2" fill="#e0d0c0" opacity="0.6"/>
+      <circle cx="100" cy="50"  r="0.8" fill="#e0d0c0" opacity="0.5"/>
+      <circle cx="300" cy="80"  r="1"   fill="#e0d0c0" opacity="0.45"/>
+
+      <!-- Ground -->
+      <rect x="0" y="240" width="400" height="40" fill="#130a10" rx="2"/>
+      <!-- Hills -->
+      <ellipse cx="70"  cy="248" rx="80"  ry="20" fill="#180c14"/>
+      <ellipse cx="330" cy="248" rx="80"  ry="20" fill="#180c14"/>
+
+      <!-- Dead trees (left) -->
+      <line x1="40" y1="240" x2="40" y2="160" stroke="#2a1420" stroke-width="3"/>
+      <line x1="40" y1="195" x2="20" y2="175" stroke="#2a1420" stroke-width="2"/>
+      <line x1="40" y1="185" x2="60" y2="165" stroke="#2a1420" stroke-width="2"/>
+      <line x1="40" y1="210" x2="18" y2="200" stroke="#2a1420" stroke-width="1.5"/>
+
+      <!-- Dead trees (right) -->
+      <line x1="360" y1="240" x2="360" y2="155" stroke="#2a1420" stroke-width="3"/>
+      <line x1="360" y1="190" x2="380" y2="170" stroke="#2a1420" stroke-width="2"/>
+      <line x1="360" y1="180" x2="342" y2="162" stroke="#2a1420" stroke-width="2"/>
+      <line x1="360" y1="208" x2="378" y2="198" stroke="#2a1420" stroke-width="1.5"/>
+
+      <!-- MANSION BODY -->
+      <!-- Main structure -->
+      <rect x="110" y="160" width="180" height="80" fill="#1e0e18" stroke="#3a1c2c" stroke-width="1"/>
+
+      <!-- Left wing -->
+      <rect x="75"  y="175" width="55"  height="65" fill="#180c14" stroke="#3a1c2c" stroke-width="1"/>
+      <!-- Right wing -->
+      <rect x="270" y="175" width="55"  height="65" fill="#180c14" stroke="#3a1c2c" stroke-width="1"/>
+
+      <!-- Center tower (tall) -->
+      <rect x="165" y="110" width="70" height="90" fill="#241220" stroke="#3a1c2c" stroke-width="1"/>
+      <!-- Left tower -->
+      <rect x="90"  y="135" width="45" height="70" fill="#1e0e18" stroke="#3a1c2c" stroke-width="1"/>
+      <!-- Right tower -->
+      <rect x="265" y="135" width="45" height="70" fill="#1e0e18" stroke="#3a1c2c" stroke-width="1"/>
+
+      <!-- Roofs (triangles) -->
+      <!-- Center roof -->
+      <polygon points="155,110 200,68 245,110" fill="#2e1428" stroke="#4a2438" stroke-width="1"/>
+      <!-- Left tower roof -->
+      <polygon points="85,135 112,108 140,135" fill="#281020" stroke="#4a2438" stroke-width="1"/>
+      <!-- Right tower roof -->
+      <polygon points="260,135 287,108 315,135" fill="#281020" stroke="#4a2438" stroke-width="1"/>
+      <!-- Left wing roof -->
+      <polygon points="70,175 102,158 135,175" fill="#1e0e18" stroke="#3a1c2c" stroke-width="1"/>
+      <!-- Right wing roof -->
+      <polygon points="265,175 298,158 330,175" fill="#1e0e18" stroke="#3a1c2c" stroke-width="1"/>
+
+      <!-- Roof spires -->
+      <line x1="200" y1="68" x2="200" y2="52" stroke="#4a2438" stroke-width="2"/>
+      <circle cx="200" cy="50" r="3" fill="#e8904c" opacity="0.7"/>
+      <line x1="112" y1="108" x2="112" y2="94" stroke="#3a1c2c" stroke-width="1.5"/>
+      <circle cx="112" cy="92" r="2" fill="#9870c8" opacity="0.6"/>
+      <line x1="287" y1="108" x2="287" y2="94" stroke="#3a1c2c" stroke-width="1.5"/>
+      <circle cx="287" cy="92" r="2" fill="#9870c8" opacity="0.6"/>
+
+      <!-- Windows — glowing orange/purple -->
+      <!-- Center tower windows -->
+      <rect x="183" y="122" width="14" height="20" rx="7" fill="#e8904c" opacity="0.6"/>
+      <rect x="203" y="122" width="14" height="20" rx="7" fill="#9870c8" opacity="0.5"/>
+      <!-- Main body windows -->
+      <rect x="128" y="172" width="16" height="24" rx="8" fill="#e8904c" opacity="0.45"/>
+      <rect x="155" y="172" width="16" height="24" rx="8" fill="#9870c8" opacity="0.4"/>
+      <rect x="229" y="172" width="16" height="24" rx="8" fill="#9870c8" opacity="0.45"/>
+      <rect x="256" y="172" width="16" height="24" rx="8" fill="#e8904c" opacity="0.4"/>
+      <!-- Tower windows -->
+      <rect x="100" y="148" width="12" height="18" rx="6" fill="#e8904c" opacity="0.4"/>
+      <rect x="288" y="148" width="12" height="18" rx="6" fill="#9870c8" opacity="0.4"/>
+      <!-- Wing windows -->
+      <rect x="87"  y="188" width="12" height="18" rx="6" fill="#d4a840" opacity="0.4"/>
+      <rect x="301" y="188" width="12" height="18" rx="6" fill="#d4a840" opacity="0.4"/>
+
+      <!-- Door -->
+      <rect x="183" y="210" width="34" height="30" rx="17" fill="#2e1428" stroke="#4a2438" stroke-width="1"/>
+      <circle cx="200" cy="225" r="2" fill="#d4a840" opacity="0.7"/>
+
+      <!-- Jack-o-lanterns on steps -->
+      <ellipse cx="175" cy="242" rx="8" ry="7" fill="#e8904c" opacity="0.8"/>
+      <rect x="173" y="235" width="4" height="4" rx="1" fill="#8ab49a" opacity="0.7"/>
+      <path d="M171,240 L175,244 L179,240" fill="#0a0608" opacity="0.9"/><!-- eyes+mouth simplified -->
+      <ellipse cx="225" cy="242" rx="8" ry="7" fill="#e8904c" opacity="0.8"/>
+      <rect x="223" y="235" width="4" height="4" rx="1" fill="#8ab49a" opacity="0.7"/>
+
+      <!-- Bats in sky -->
+      <g transform="translate(80,55)" opacity="0.65">
+        <path d="M 0,-3 C -5,-7 -13,-5 -15,0 C -11,-1 -6,2 0,0 C 6,2 11,-1 15,0 C 13,-5 5,-7 0,-3 Z" fill="#9870c8"/>
+        <ellipse cx="0" cy="1" rx="2.5" ry="3.5" fill="#9870c8"/>
+      </g>
+      <g transform="translate(310,45) scale(0.8)" opacity="0.55">
+        <path d="M 0,-3 C -5,-7 -13,-5 -15,0 C -11,-1 -6,2 0,0 C 6,2 11,-1 15,0 C 13,-5 5,-7 0,-3 Z" fill="#9870c8"/>
+        <ellipse cx="0" cy="1" rx="2.5" ry="3.5" fill="#9870c8"/>
+      </g>
+      <g transform="translate(155,40) scale(0.6)" opacity="0.5">
+        <path d="M 0,-3 C -5,-7 -13,-5 -15,0 C -11,-1 -6,2 0,0 C 6,2 11,-1 15,0 C 13,-5 5,-7 0,-3 Z" fill="#c890e0"/>
+        <ellipse cx="0" cy="1" rx="2.5" ry="3.5" fill="#c890e0"/>
+      </g>
+    </svg>
+
+    <p class="hero-eyebrow">Unicornia Mansion · Jedes Jahr</p>
+    <h1 class="hero-title">
+      <span>Unicornia</span>
+      <em>Halloween</em>
+    </h1>
+    <p class="hero-sub">die schaurigste Nacht des Jahres</p>
+
+    <div class="hero-ornament">
+      <div class="hero-ornament-line"></div>
+      <!-- Tiny bat ornament -->
+      <svg width="24" height="16" viewBox="0 0 24 16" fill="none" aria-hidden="true">
+        <path d="M 12,4 C 7,0 0,3 0,8 C 4,6 8,10 12,8 C 16,10 20,6 24,8 C 24,3 17,0 12,4 Z" fill="#9870c8" opacity="0.7"/>
+        <ellipse cx="12" cy="9" rx="3" ry="4" fill="#9870c8" opacity="0.8"/>
+      </svg>
+      <div class="hero-ornament-line"></div>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">↓</div>
+  </header>
+
+  <main>
+
+    <!-- ── JAHRE ── -->
+    <section class="section">
+      <p class="section-label">Die Jahre</p>
+      <div class="years-grid">
+
+        <a href="halloween-2021.html" class="year-card" style="
+          --year-color: #c04060;
+          --year-accent: linear-gradient(to right, #c04060, #8030a0);
+          --year-border: rgba(192,64,96,0.25);
+          --year-glow:   rgba(192,64,96,0.08);">
+          <div class="year-number">2021</div>
+          <h3 class="year-theme">Die Maske des Roten Todes</h3>
+          <span class="year-cta">Zur Seite →</span>
+        </a>
+
+        <a href="halloween-2022.html" class="year-card" style="
+          --year-color: #c060a0;
+          --year-accent: linear-gradient(to right, #c060a0, #e89040);
+          --year-border: rgba(192,96,160,0.25);
+          --year-glow:   rgba(192,96,160,0.08);">
+          <div class="year-number">2022</div>
+          <h3 class="year-theme">Carn&ldquo;evil&rdquo;</h3>
+          <span class="year-cta">Zur Seite →</span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ── TRADITION ── -->
+    <section class="section">
+      <p class="section-label">Die Tradition</p>
+
+      <div class="tradition-grid">
+
+        <div class="tradition-card" style="--card-accent: linear-gradient(to right, #e8904c, #d4a840);">
+          <span class="tradition-icon">🎃</span>
+          <h3 class="tradition-title">Das Mansion</h3>
+          <p class="tradition-text">
+            Jedes Jahr verwandelt sich das Unicornia Mansion in ein Spukhaus der besonderen Art —
+            Kürbisse, Kerzen und schaurige Dekoration überall.
+          </p>
+        </div>
+
+        <div class="tradition-card" style="--card-accent: linear-gradient(to right, #9870c8, #c0a0e0);">
+          <span class="tradition-icon">🦇</span>
+          <h3 class="tradition-title">Die Kostüme</h3>
+          <p class="tradition-text">
+            Ohne Kostüm kommt man nicht rein. Jede Feier hat ein Motto —
+            und die Kostüme werden von Jahr zu Jahr aufwendiger.
+          </p>
+        </div>
+
+        <div class="tradition-card" style="--card-accent: linear-gradient(to right, #d4a840, #e8904c);">
+          <span class="tradition-icon">🕯️</span>
+          <h3 class="tradition-title">Die Atmosphäre</h3>
+          <p class="tradition-text">
+            Kerzenlicht, geheimnisvolle Ecken und ein Hauch von echtem Gruseln —
+            Halloween im Unicornia Mansion ist unvergesslich.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── GALLERY ── -->
+    <section class="gallery-section">
+      <p class="section-label">Erinnerungen</p>
+
+      <div class="gallery-grid">
+        <!-- Bildslots: Ersetze das <svg> mit <img src="pfad/zu/bild.jpg" alt="..."> wenn du Bilder hast -->
+
+        <div class="gallery-slot">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="6" width="24" height="20" rx="3" stroke="#5a4858" stroke-width="1.5"/>
+            <circle cx="16" cy="15" r="5" stroke="#5a4858" stroke-width="1.5"/>
+            <circle cx="23" cy="10" r="1.5" fill="#5a4858"/>
+          </svg>
+          <span>Foto</span>
+        </div>
+
+        <div class="gallery-slot">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="6" width="24" height="20" rx="3" stroke="#5a4858" stroke-width="1.5"/>
+            <circle cx="16" cy="15" r="5" stroke="#5a4858" stroke-width="1.5"/>
+            <circle cx="23" cy="10" r="1.5" fill="#5a4858"/>
+          </svg>
+          <span>Foto</span>
+        </div>
+
+        <div class="gallery-slot">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="6" width="24" height="20" rx="3" stroke="#5a4858" stroke-width="1.5"/>
+            <circle cx="16" cy="15" r="5" stroke="#5a4858" stroke-width="1.5"/>
+            <circle cx="23" cy="10" r="1.5" fill="#5a4858"/>
+          </svg>
+          <span>Foto</span>
+        </div>
+
+        <div class="gallery-slot">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="6" width="24" height="20" rx="3" stroke="#5a4858" stroke-width="1.5"/>
+            <circle cx="16" cy="15" r="5" stroke="#5a4858" stroke-width="1.5"/>
+            <circle cx="23" cy="10" r="1.5" fill="#5a4858"/>
+          </svg>
+          <span>Foto</span>
+        </div>
+
+        <div class="gallery-slot">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="6" width="24" height="20" rx="3" stroke="#5a4858" stroke-width="1.5"/>
+            <circle cx="16" cy="15" r="5" stroke="#5a4858" stroke-width="1.5"/>
+            <circle cx="23" cy="10" r="1.5" fill="#5a4858"/>
+          </svg>
+          <span>Foto</span>
+        </div>
+
+        <div class="gallery-slot">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="6" width="24" height="20" rx="3" stroke="#5a4858" stroke-width="1.5"/>
+            <circle cx="16" cy="15" r="5" stroke="#5a4858" stroke-width="1.5"/>
+            <circle cx="23" cy="10" r="1.5" fill="#5a4858"/>
+          </svg>
+          <span>Foto</span>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>handgemacht mit Sorgfalt &nbsp;·&nbsp; minasinchen</p>
+  </footer>
+
+  <script>
+    // ── Flying bats ───────────────────────────────
+    const batSVG = `<svg viewBox="0 0 30 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15,5 C10,0 1,3 0,10 C5,7 10,12 15,10 C20,12 25,7 30,10 C29,3 20,0 15,5Z" fill="#9870c8"/>
+      <ellipse cx="15" cy="11" rx="3.5" ry="5" fill="#9870c8"/>
+    </svg>`;
+
+    const styleEl = document.createElement('style');
+    const batAnims = [
+      { x: 300, y: -30, rot: 20 },
+      { x: -280, y: -15, rot: -15 },
+      { x: 250, y: -40, rot: 10 },
+      { x: -220, y: -20, rot: -25 },
+      { x: 180, y: -10, rot: 15 },
+    ];
+
+    batAnims.forEach((a, i) => {
+      styleEl.textContent += `
+        @keyframes bat${i} {
+          0%   { transform:translate(0,0) rotate(0deg); opacity:0; }
+          8%   { opacity:0.35; }
+          92%  { opacity:0.25; }
+          100% { transform:translate(${a.x}px,${a.y}px) rotate(${a.rot}deg); opacity:0; }
+        }`;
+    });
+    document.head.appendChild(styleEl);
+
+    for (let i = 0; i < 7; i++) {
+      const bat = document.createElement('div');
+      const size = Math.random() * 18 + 16;
+      bat.innerHTML = batSVG;
+      bat.style.cssText = `
+        position:fixed;
+        left:${Math.random() * 100}vw;
+        top:${Math.random() * 40 + 5}vh;
+        width:${size}px; height:auto;
+        pointer-events:none; z-index:0; opacity:0;
+        animation:bat${i % batAnims.length} ${Math.random() * 12 + 14}s ease-in-out ${Math.random() * 10}s infinite;`;
+      document.body.appendChild(bat);
+    }
+  </script>
+
+</body>
+</html>
